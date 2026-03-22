@@ -23,10 +23,19 @@ vectorizer = tfidf_bundle["vectorizer"]
 classifier = tfidf_bundle["classifier"]
 
 # -------------------------------------------------
-# Load DistilBERT
+# Load DistilBERT (Optional fall-back)
 # -------------------------------------------------
 tokenizer = DistilBertTokenizerFast.from_pretrained("distilbert-base-uncased")
-bert_model = TFDistilBertForSequenceClassification.from_pretrained(BERT_MODEL_PATH)
+bert_model = None
+
+try:
+    if os.path.exists(BERT_MODEL_PATH):
+        bert_model = TFDistilBertForSequenceClassification.from_pretrained(BERT_MODEL_PATH)
+        print("✅ BERT model loaded successfully.")
+    else:
+        print("⚠️ BERT model not found. Using TF-IDF baseline.")
+except Exception as e:
+    print(f"⚠️ Error loading BERT model: {e}. Using TF-IDF baseline.")
 
 # -------------------------------------------------
 # NLP + rules

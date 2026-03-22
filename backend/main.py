@@ -1,7 +1,10 @@
-# -------------------------------------------------
-# Smart Email Sorting System - Main Application
-# Version: 3.3 (Final Architecture with Gmail Connect)
-# -------------------------------------------------
+import sys
+import os
+
+# 🔥 AUTO-FIX: Ensure 'backend' is seen as a package even when run from inside the folder
+BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if BASE_PATH not in sys.path:
+    sys.path.append(BASE_PATH)
 
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
